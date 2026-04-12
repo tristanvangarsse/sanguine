@@ -1,12 +1,17 @@
 * {
-    outline: 1px dotted rgba(255,0,0,0);
+    outline: 1px dotted rgba(255, 0, 0, 0);
     margin: 0;
     padding: 0;
 }
 
-*::selection {background-color: lightgray;}
+*::selection {
+    background-color: lightgray;
+}
 
-body,html {font-family: 'Inter', sans-serif;}
+body,
+html {
+    font-family: "Inter", sans-serif;
+}
 
 body {
     display: flex;
@@ -59,17 +64,19 @@ header > a {
     text-decoration: none;
     color: rgb(159, 159, 159);
     padding-bottom: 6px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0)
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 
 .link:hover {
-    border-bottom: 1px solid rgb(168, 168, 168)
+    border-bottom: 1px solid rgb(168, 168, 168);
 }
 
 /*------------------------------- Main
 */
 
-main {width: 550px;}
+main {
+    width: 550px;
+}
 
 .image-container {
     width: 550px;
@@ -92,14 +99,16 @@ main {width: 550px;}
 /*------------------------------- Info Container
 */
 
-.info-container {margin: 15px 25px 60px 25px;}
+.info-container {
+    margin: 15px 25px 60px 25px;
+}
 
 /*------------------------------- Text description
 */
 
 .post-description {
     display: none; /* disabled text description */
-    font-family: 'Spectral', serif;
+    font-family: "Canela Text Trial", serif;
     font-weight: 300;
     font-size: 16px;
     line-height: 140%;
@@ -130,14 +139,14 @@ main {width: 550px;}
 .poem-title {
     font-size: 25px;
     font-weight: 500;
-    font-family: 'Spectral', serif;
+    font-family: "Spectral", serif;
     line-height: 130%;
     text-align: center;
     margin: 0 0 15px 0;
 }
 
 .poem {
-    font-family: 'Spectral', serif;
+    font-family: "Spectral", serif;
     font-weight: 300;
     font-size: 16px;
     line-height: 140%;
@@ -151,7 +160,9 @@ main {width: 550px;}
     margin: 15px 0 0 0;
 }
 
-.poem > b {font-weight: 600;}
+.poem > b {
+    font-weight: 600;
+}
 
 /*------------------------------- About
 */
@@ -163,25 +174,36 @@ main {width: 550px;}
 }
 
 .about {
-    font-family: 'Spectral', serif;
+    font-family: "Spectral", serif;
     line-height: 150%;
     text-align: center;
     margin: 0 0 50px 0;
 }
 
-
 @media only screen and (max-width: 600px) {
+    *::-webkit-scrollbar {
+        display: none;
+    }
+    * {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 
-    *::-webkit-scrollbar {display: none;}
-    * {-ms-overflow-style: none; scrollbar-width: none;}
+    header {
+        margin: 0 0 20px 0;
+    }
 
-    header {margin: 0 0 20px 0;}
+    .menu {
+        margin: 35px 0 5px 0;
+    }
 
-    .menu {margin: 35px 0 5px 0;}
+    .link {
+        font-size: 12px;
+    }
 
-    .link {font-size: 12px;}
-
-    main {width: 90vw;}
+    main {
+        width: 90vw;
+    }
 
     .image-container {
         width: 90vw;
@@ -189,7 +211,9 @@ main {width: 550px;}
         border-radius: 17px;
     }
 
-    .info-container {margin: 10px 2px 30px 2px;}
+    .info-container {
+        margin: 10px 2px 30px 2px;
+    }
 
     .post-description {
         font-size: 15px;
@@ -201,11 +225,12 @@ main {width: 550px;}
         margin: 0 30px 0 30px;
     }
 
-    .poem-timestamp {font-size: 8px;}
+    .poem-timestamp {
+        font-size: 8px;
+    }
 
     .about {
         font-size: 14px;
         margin: 0px 20px 50px 20px;
     }
-
 }
