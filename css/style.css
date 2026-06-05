@@ -1,236 +1,418 @@
-* {
-    outline: 1px dotted rgba(255, 0, 0, 0);
+@font-face {
+    font-family: "InterVariable";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/fonts/inter/InterVariable.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Prompt";
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src: url("/fonts/prompt/Prompt-200-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Prompt";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url("/fonts/prompt/Prompt-300-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Prompt";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/prompt/Prompt-400-latin.woff2") format("woff2");
+}
+
+:root {
+    --font-primary:
+        "InterVariable", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    --font-secondary:
+        "Prompt", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    --page-margin: 40px;
+    --grid-gap: clamp(10px, 1vw, 30px);
+    --grid-template-columns: repeat(8, minmax(0, 1fr));
+    --color-page-bg: rgb(246, 246, 244);
+    --color-page-fg: black;
+    --color-sanguine: rgb(218, 44, 31);
+    --header-height: 80px;
+    --smooth-scroll-damping: 0.05;
+    --smooth-scroll-wheel-multiplier: 1.2;
+    --carousel-autoplay-interval: 3000;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 *::selection {
-    background-color: lightgray;
+    color: white;
+    background-color: var(--color-sanguine);
 }
 
-body,
 html {
-    font-family: "Inter", sans-serif;
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    overflow: hidden;
+    text-size-adjust: none;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    overscroll-behavior: none;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    overflow: hidden;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 350;
+    line-height: 1.35;
+    color: var(--color-page-fg);
+    background: var(--color-page-bg);
 }
 
-/*------------------------------- Header
-*/
+a {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+}
+
+img,
+picture,
+svg {
+    display: block;
+    max-width: 100%;
+    pointer-events: none;
+    user-select: none;
+}
+
+.grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: var(--grid-template-columns);
+    column-gap: var(--grid-gap);
+    padding-inline: var(--page-margin);
+}
+
+.load-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--page-margin);
+    color: var(--color-page-fg);
+    background: var(--color-page-bg);
+    pointer-events: none;
+    animation: load-overlay-exit 1000ms ease 100ms forwards;
+}
+
+@keyframes load-overlay-content-in {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes load-overlay-exit {
+    to {
+        transform: translateY(-16px);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
 
 header {
-    display: flex;
-    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
     align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    width: 100%;
-    padding: 30px 0 0 0;
-    margin: 0 0 10px 0;
-}
-
-h1 {
-    font-size: 16px;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-h2 {
-    font-size: 9px;
-    font-weight: 400;
-    text-transform: uppercase;
-}
-
-header > a {
-    text-decoration: none;
-    color: black;
-}
-
-.menu {
-    margin: 40px 0;
-    display: flex;
-    gap: 30px;
-}
-
-.link {
-    margin: 0 0 40px 0;
-    font-size: 13px;
-    font-weight: 300;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: rgb(159, 159, 159);
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0);
-}
-
-.link:hover {
-    border-bottom: 1px solid rgb(168, 168, 168);
-}
-
-/*------------------------------- Main
-*/
-
-main {
-    width: 550px;
-}
-
-.image-container {
-    width: 550px;
-    height: 550px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border-radius: 17px;
-}
-
-.image-container > img {
-    flex-shrink: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: var(--header-height);
+    padding-block: 30px;
+    color: white;
+    mix-blend-mode: difference;
     pointer-events: none;
 }
 
-/*------------------------------- Info Container
-*/
-
-.info-container {
-    margin: 15px 25px 60px 25px;
+header > .wordmark,
+header > .wordmark-name,
+header > .jump-link {
+    position: relative;
+    pointer-events: auto;
 }
 
-/*------------------------------- Text description
-*/
+header > .wordmark::before,
+header > .wordmark-name::before,
+header > .jump-link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 800ms ease;
+}
 
-.post-description {
-    display: none; /* disabled text description */
-    font-family: "Canela Text Trial", serif;
+header > .wordmark:hover::before,
+header > .wordmark:focus-visible::before,
+header > .wordmark-name:hover::before,
+header > .wordmark-name:focus-visible::before,
+header > .jump-link:hover::before,
+header > .jump-link:focus-visible::before {
+    transform: scaleX(1);
+    transform-origin: left;
+    transition-duration: 500ms;
+}
+
+header > .wordmark {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    justify-self: start;
+    font-family: var(--font-secondary);
+    font-size: 20px;
     font-weight: 300;
-    font-size: 16px;
-    line-height: 140%;
-    margin: 17px 0 12px 0;
+    line-height: 1;
 }
 
-.post-timestamp {
-    font-size: 10px;
-    font-weight: 400;
-    text-transform: uppercase;
-    color: rgb(159, 159, 159);
-}
-
-.gray {
-    color: rgb(215, 215, 215);
-}
-
-/*------------------------------- Poem Container
-*/
-
-.poem-container {
-    margin: 100px 50px 110px 50px;
-    padding: 25px 0;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-}
-
-.poem-title {
-    font-size: 25px;
-    font-weight: 500;
-    font-family: "Spectral", serif;
-    line-height: 130%;
-    text-align: center;
-    margin: 0 0 15px 0;
-}
-
-.poem {
-    font-family: "Spectral", serif;
+header > .wordmark-name {
+    grid-column: 1 / 5;
+    grid-row: 2;
+    display: none;
+    justify-self: start;
+    align-self: start;
+    margin-top: 6px;
+    font-family: var(--font-secondary);
+    min-width: max-content;
+    font-size: 13px;
     font-weight: 300;
-    font-size: 16px;
-    line-height: 140%;
-    margin: 0 0 10px 0;
+    line-height: 1;
 }
 
-.poem-timestamp {
-    font-size: 10px;
-    font-weight: 500;
-    text-transform: uppercase;
-    margin: 15px 0 0 0;
+header > .jump-link {
+    grid-column: 6 / 9;
+    justify-self: end;
+    font-family: var(--font-secondary);
+    min-width: max-content;
+    font-size: 20px;
+    font-weight: 300;
+    text-align: end;
 }
 
-.poem > b {
-    font-weight: 600;
-}
-
-/*------------------------------- About
-*/
-
-.about-main {
+main {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100vw;
+    height: 100svh;
+    gap: var(--grid-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: calc(var(--header-height) + 28px) var(--page-margin) 40px;
+    scroll-behavior: auto;
+    scroll-padding-inline: var(--page-margin);
+    scrollbar-width: none;
 }
 
-.about {
-    font-family: "Spectral", serif;
-    line-height: 150%;
+main::-webkit-scrollbar {
+    display: none;
+}
+
+.year-slide:first-child {
+    margin-left: 20vw;
+}
+
+.year-slide {
+    display: flex;
+    flex: 0 0 min(42vw, 620px);
+    align-items: flex-end;
+    justify-content: center;
+    height: calc(100svh - var(--header-height) - 68px);
     text-align: center;
-    margin: 0 0 50px 0;
 }
 
-@media only screen and (max-width: 600px) {
-    *::-webkit-scrollbar {
-        display: none;
+.year-slide p {
+    font-family: var(--font-secondary);
+    font-size: clamp(96px, 14vw, 210px);
+    font-weight: 200;
+    line-height: 0.86;
+    letter-spacing: -0.07em;
+}
+
+.gallery-slide {
+    display: flex;
+    flex: 0 0 min(76vw, calc(100svh - var(--header-height) - 68px));
+    align-items: center;
+    justify-content: center;
+    height: calc(100svh - var(--header-height) - 68px);
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: white;
+}
+
+.image-container > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.poem-container,
+.poem-title,
+.poem,
+.poem-timestamp {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --page-margin: 25px;
+        --grid-gap: 15px;
+        --grid-template-columns: repeat(4, minmax(0, 1fr));
     }
-    * {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+
+    header > .wordmark {
+        grid-column: 1 / 3;
+    }
+
+    header > .wordmark-name {
+        grid-column: 1 / 3;
+    }
+
+    header > .jump-link {
+        grid-column: 3 / 5;
+    }
+
+    .year-slide {
+        flex-basis: 46vw;
+    }
+
+    .gallery-slide {
+        flex-basis: min(82vw, calc(100svh - var(--header-height) - 68px));
+    }
+}
+
+@media (max-width: 700px) {
+    :root {
+        --page-margin: 20px;
+        --header-height: 78px;
+    }
+
+    html,
+    body {
+        height: auto;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior-y: auto;
+    }
+
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     header {
-        margin: 0 0 20px 0;
+        align-items: start;
+        padding-block: 16px;
     }
 
-    .menu {
-        margin: 35px 0 5px 0;
+    header > .wordmark {
+        grid-column: 1 / 3;
+        font-size: 29px;
+        white-space: nowrap;
     }
 
-    .link {
-        font-size: 12px;
+    header > .wordmark-name {
+        display: inline-block;
+        grid-column: 1 / 4;
+        margin-top: 4px;
+        font-size: 13px;
+    }
+
+    header > .jump-link {
+        display: none;
+    }
+
+    .load-overlay {
+        padding: var(--page-margin);
+    }
+
+    .load-overlay p {
+        font-size: 18px;
+    }
+
+    .load-overlay h1 {
+        font-size: clamp(70px, 22vw, 96px);
     }
 
     main {
-        width: 90vw;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        min-height: 100svh;
+        overflow: visible;
+        gap: 10px;
+        padding: calc(var(--header-height) + 24px) var(--page-margin) 48px;
+    }
+
+    .year-slide:first-child {
+        margin-left: 0;
+    }
+
+    .year-slide {
+        flex: none;
+        width: 100%;
+        height: 42svh;
+        min-height: 270px;
+    }
+
+    .year-slide p {
+        font-size: clamp(96px, 34vw, 142px);
+    }
+
+    .gallery-slide {
+        flex: none;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        align-self: stretch;
     }
 
     .image-container {
-        width: 90vw;
-        height: 90vw;
-        border-radius: 17px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    main {
+        scroll-behavior: auto;
     }
 
-    .info-container {
-        margin: 10px 2px 30px 2px;
-    }
-
-    .post-description {
-        font-size: 15px;
-        margin: 14px 30px 12px 30px;
-    }
-
-    .post-timestamp {
-        font-size: 8px;
-        margin: 0 30px 0 30px;
-    }
-
-    .poem-timestamp {
-        font-size: 8px;
-    }
-
-    .about {
-        font-size: 14px;
-        margin: 0px 20px 50px 20px;
+    .load-overlay,
+    .load-overlay--content {
+        animation-duration: 1ms;
+        animation-delay: 1ms;
     }
 }
